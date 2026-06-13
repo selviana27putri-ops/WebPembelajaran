@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust Railway's reverse proxy for HTTPS
+        $middleware->trustProxies(at: '*');
+
         $middleware->redirectGuestsTo(function (\Illuminate\Http\Request $request) {
             session()->flash('error', 'Silakan login terlebih dahulu untuk mengakses halaman tersebut.');
             return route('login');
