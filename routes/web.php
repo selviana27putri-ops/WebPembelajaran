@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\NilaiController;
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/setup-db', function () {
+    Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
+    return 'Database migrated and seeded successfully! You can now login with admin@eduspace.com / password';
+});
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/materi/{id}', [PublicController::class, 'show'])->name('materi.show');
